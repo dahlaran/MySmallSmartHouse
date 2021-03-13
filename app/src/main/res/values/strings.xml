@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MySmallSmartHouse</string>
+
+    <!-- Errors Message -->
+    <string name="error_input_failed">Cannot find/access the device file</string>
+    <string name="error_read_failed">Cannot read the device file</string>
+</resources>
