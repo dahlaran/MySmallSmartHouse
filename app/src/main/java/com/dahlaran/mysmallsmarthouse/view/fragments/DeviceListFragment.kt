@@ -35,6 +35,7 @@ class DeviceListFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
 
         setUpListAdapter()
+        setDeviceTypeFilter()
     }
 
     private fun setUpListAdapter() {
@@ -45,6 +46,13 @@ class DeviceListFragment : Fragment(){
         viewDataBinding.mediaListRecycler.apply {
             adapter = listAdapter
             layoutManager = LinearLayoutManager(context)
+        }
+    }
+
+    private fun setDeviceTypeFilter() {
+        viewDataBinding.filterDeviceType.setLiveDataToListen(mediaListViewModel.devicesList)
+        viewDataBinding.filterDeviceType.setOnSelectedListener {
+            mediaListViewModel.filterByTypes(it)
         }
     }
 }

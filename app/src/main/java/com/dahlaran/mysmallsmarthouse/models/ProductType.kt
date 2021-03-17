@@ -20,5 +20,15 @@ enum class ProductType(val type: String) {
                 else -> LIGHT
             }
         }
+
+        fun fromString(string: String): ProductType? {
+            return when (string) {
+                LIGHT.type -> LIGHT
+                HEATER.type -> HEATER
+                ROLLER_SHUTTER.type -> ROLLER_SHUTTER
+
+                else -> null
+            }
+        }
     }
 }

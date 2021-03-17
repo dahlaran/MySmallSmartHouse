@@ -13,8 +13,6 @@
     <color name="colorAccent">#0D5D98</color>
 
     <!-- User Profile -->
-    <color name="address">#2F7092</color>
-    <color name="followers">#0D5D98</color>
     <color name="headings">#3797CF</color>
     <color name="solidCircle">#AAFFFFFF</color>
     <color name="circleBorder">#50FFFFFF</color>
@@ -23,4 +21,9 @@
     <color name="followersBg">#65DCE5</color>
     <color name="followingBg">#49BEFF</color>
     <color name="grey">#E5E5E5</color>
+
+
+    <!-- Chip Color -->
+    <color name="chip_selected">#FFFFFFFF</color>
+    <color name="chip_disable">#AAFFFFFF</color>
 </resources>

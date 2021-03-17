@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.dahlaran.mysmallsmarthouse.data.HouseRepository
 import com.dahlaran.mysmallsmarthouse.models.Device
+import com.dahlaran.mysmallsmarthouse.models.ProductType
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -20,6 +21,7 @@ class DeviceListViewModel : ViewModel() {
     private val disposable = CompositeDisposable()
 
     val devicesList: MutableLiveData<List<Device>> = MutableLiveData()
+    val devicesListShow: MutableLiveData<List<Device>> = MutableLiveData()
     val dataLoading: MutableLiveData<Boolean> = MutableLiveData()
 
     val empty: LiveData<Boolean> = devicesList.map { it.isEmpty() }
@@ -36,6 +38,7 @@ class DeviceListViewModel : ViewModel() {
                     .subscribe(
                         { // onNext
                             devicesList.postValue(it.deviceList)
+                            devicesListShow.postValue(it.deviceList)
                             // Copy value to have a make a sorting inside the liveData
                             savedDeviceList = ArrayList(it.deviceList)
                         },
@@ -62,6 +65,7 @@ class DeviceListViewModel : ViewModel() {
                     .subscribe(
                         { // onNext
                             devicesList.postValue(it.deviceList)
+                            devicesListShow.postValue(it.deviceList)
                             // Copy value to have a make a sorting inside the liveData
                             savedDeviceList = ArrayList(it.deviceList)
                         },
@@ -84,4 +88,11 @@ class DeviceListViewModel : ViewModel() {
         super.onCleared()
     }
 
+
+    fun filterByTypes(types : List<ProductType>){
+        val listFiltered = devicesList.value?.filter { device ->
+            types.contains(device.productType)
+        }
+        devicesListShow.postValue(listFiltered)
+    }
 }

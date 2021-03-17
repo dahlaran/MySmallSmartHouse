@@ -29,7 +29,7 @@
                 android:id="@+id/deviceTypeImage"
                 android:layout_width="@dimen/device_type_image_size"
                 android:layout_height="@dimen/device_type_image_size"
-                android:src="@drawable/roller_shutter_icon"
+                android:src="@drawable/ic_roller_shutter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
