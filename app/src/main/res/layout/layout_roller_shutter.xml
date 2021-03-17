@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="shutter"
+            type="com.dahlaran.mysmallsmarthouse.models.RollerShutter" />
+    </data>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="@dimen/default_dim"
+        android:layout_marginStart="@dimen/big_dim"
+        android:layout_marginEnd="@dimen/big_dim"
+        android:layout_marginBottom="@dimen/default_dim">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/big_dim">
+
+            <ImageView
+                android:id="@+id/deviceTypeImage"
+                android:layout_width="@dimen/device_type_image_size"
+                android:layout_height="@dimen/device_type_image_size"
+                android:src="@drawable/roller_shutter_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/big_dim"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/deviceTypeImage">
+
+                <TextView
+                    android:id="@+id/nameRollerShutterLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{shutter.name}"
+                    android:textSize="@dimen/big_text_size"
+                    android:textColor="@color/black"
+                    tools:text="Name"/>
+
+                <TextView
+                    android:id="@+id/positionRollerShutterLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{shutter.position}"
+                    android:textSize="@dimen/big_text_size"
+                    android:textColor="@color/black"
+                    tools:text="Mode"/>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

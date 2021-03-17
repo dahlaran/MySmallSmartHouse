@@ -20,4 +20,8 @@ data class User(
             )
         }
     }
+
+    fun getBirthDateToShow(): String {
+        return birthDate.toString()
+    }
 }

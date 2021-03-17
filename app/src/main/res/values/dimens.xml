@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="image_no_task_dimens">64dp</dimen>
+
+    <dimen name="default_dim">12dp</dimen>
+    <dimen name="big_dim">16dp</dimen>
+    <dimen name="very_big_dim">24dp</dimen>
+    <dimen name="default_text_size">12sp</dimen>
+    <dimen name="big_text_size">18sp</dimen>
+    <dimen name="device_type_image_size">64dp</dimen>
+</resources>

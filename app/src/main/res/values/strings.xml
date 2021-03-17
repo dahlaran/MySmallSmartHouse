@@ -4,4 +4,8 @@
     <!-- Errors Message -->
     <string name="error_input_failed">Cannot find/access the device file</string>
     <string name="error_read_failed">Cannot read the device file</string>
+    <string name="no_devices">Any device have been found</string>
+    <string name="device_list_menu">Devices</string>
+    <string name="notification_menu">Notification</string>
+    <string name="user_menu">User</string>
 </resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_navigation"
+    app:startDestination="@id/media_list_fragment_dest">
+
+    <fragment
+        android:id="@+id/media_list_fragment_dest"
+        android:name="com.dahlaran.mysmallsmarthouse.view.fragments.DeviceListFragment">
+
+        <action
+            android:id="@+id/action_mediaListFragment_to_mediaDetailFragment"
+            app:destination="@id/media_detail_fragment_dest"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/media_detail_fragment_dest">
+        <action
+            android:id="@+id/action_mediaDetailActivity_to_mediaListActivity"
+            app:destination="@id/media_list_fragment_dest"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="mediaId"
+            app:argType="integer" />
+    </fragment>
+
+</navigation>

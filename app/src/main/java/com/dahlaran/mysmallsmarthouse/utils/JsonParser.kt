@@ -9,12 +9,6 @@ import org.json.JSONObject
 
 object JsonParser {
 
-    fun getHouseFromFile(context: Context? = null): House {
-        val devicesString: String = FileUtils.getStringFromLocalDeviceFile(context)
-
-        return parseJsonToHouse(devicesString)
-    }
-
     fun parseJsonToHouse(jsonToParse: String): House {
         var user: User? = null
         var deviceList: List<Device> = mutableListOf()

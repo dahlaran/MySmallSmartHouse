@@ -18,13 +18,6 @@ class JsonParserTest {
     }
 
     @Test
-    fun getDevicesFromFileTest() {
-        val house = JsonParser.getHouseFromFile()
-        assert(house.deviceList.isNotEmpty())
-        assert(house.user != null)
-    }
-
-    @Test
     fun parseJsonToDevicesTestEmpty() {
         val house = JsonParser.parseJsonToHouse("")
         assert(house.deviceList.isEmpty())
