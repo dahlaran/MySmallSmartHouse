@@ -1,5 +1,6 @@
 package com.dahlaran.mysmallsmarthouse.models
 
+import com.dahlaran.mysmallsmarthouse.utils.DateUtils
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -21,7 +22,7 @@ data class User(
         }
     }
 
-    fun getBirthDateToShow(): String {
-        return birthDate.toString()
+    fun birthDateToShow(): String {
+        return DateUtils.convertLongToDateString(birthDate)
     }
 }

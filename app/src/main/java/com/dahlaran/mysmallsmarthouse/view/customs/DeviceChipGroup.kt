@@ -1,6 +1,7 @@
 package com.dahlaran.mysmallsmarthouse.view.customs
 
 import android.content.Context
+import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.appcompat.content.res.AppCompatResources
@@ -39,6 +40,15 @@ class DeviceChipGroup : ChipGroup {
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
             super(context, attrs, defStyleAttr)
+
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+        itemList.forEach {
+            drawShip(it)
+        }
+    }
+
 
 
     fun setOnSelectedListener(onChipSelected: (listItem: List<ProductType>) -> Unit) {

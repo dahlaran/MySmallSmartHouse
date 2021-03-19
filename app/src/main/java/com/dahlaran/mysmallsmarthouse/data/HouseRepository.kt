@@ -1,6 +1,7 @@
 package com.dahlaran.mysmallsmarthouse.data
 
 import com.dahlaran.mysmallsmarthouse.models.House
+import com.dahlaran.mysmallsmarthouse.models.User
 import com.dahlaran.mysmallsmarthouse.utils.FileUtils
 import io.reactivex.Observable
 
@@ -12,7 +13,6 @@ object HouseRepository {
     }
 
     suspend fun getHouseInformation(): Observable<House> {
-
         return houseInformation
     }
 

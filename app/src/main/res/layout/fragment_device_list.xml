@@ -30,7 +30,7 @@
                 android:paddingEnd="@dimen/default_dim"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mediaListRecycler"
+                android:id="@+id/deviceListRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbarThumbVertical="@android:color/darker_gray"

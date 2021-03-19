@@ -15,7 +15,7 @@ import com.dahlaran.mysmallsmarthouse.view.DeviceListAdapter
 import com.dahlaran.mysmallsmarthouse.viewmodels.DeviceListViewModel
 
 class DeviceListFragment : Fragment(){
-    private val mediaListViewModel: DeviceListViewModel by activityViewModels()
+    private val deviceListViewModel: DeviceListViewModel by activityViewModels()
     private lateinit var viewDataBinding: FragmentDeviceListBinding
 
     override fun onCreateView(
@@ -25,7 +25,7 @@ class DeviceListFragment : Fragment(){
 
         viewDataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_device_list, container, false)
         viewDataBinding.apply {
-            this.viewmodel = mediaListViewModel
+            this.viewmodel = deviceListViewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
         return viewDataBinding.root
@@ -43,16 +43,16 @@ class DeviceListFragment : Fragment(){
             CustomLogger.logD(javaClass.name, "device = "+ itemClicked.name)
         }
 
-        viewDataBinding.mediaListRecycler.apply {
+        viewDataBinding.deviceListRecycler.apply {
             adapter = listAdapter
             layoutManager = LinearLayoutManager(context)
         }
     }
 
     private fun setDeviceTypeFilter() {
-        viewDataBinding.filterDeviceType.setLiveDataToListen(mediaListViewModel.devicesList)
+        viewDataBinding.filterDeviceType.setLiveDataToListen(deviceListViewModel.devicesList)
         viewDataBinding.filterDeviceType.setOnSelectedListener {
-            mediaListViewModel.filterByTypes(it)
+            deviceListViewModel.filterByTypes(it)
         }
     }
 }

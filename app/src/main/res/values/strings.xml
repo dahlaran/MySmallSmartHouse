@@ -14,4 +14,5 @@
     <string name="error_input_failed">Cannot find/access the device file</string>
     <string name="error_read_failed">Cannot read the device file</string>
     <string name="no_devices">Any device have been found</string>
+    <string name="notification_unavailable">Notification page can be an improvement</string>
 </resources>

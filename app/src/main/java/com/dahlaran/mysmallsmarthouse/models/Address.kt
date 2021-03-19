@@ -22,4 +22,8 @@ data class Address(
             )
         }
     }
+
+    fun postalToShow(): String {
+        return postalCode.toString()
+    }
 }
