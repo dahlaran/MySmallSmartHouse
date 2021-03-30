@@ -21,26 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-<!--
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:layout_marginTop="46dp"
-                android:padding="5dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_user_profile"
-                app:civ_border_color="@color/black"
-                app:civ_border_width="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
--->
-
             <ImageView
                 android:id="@+id/profile_image"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
+                android:layout_width="@dimen/profile_user_dim"
+                android:layout_height="@dimen/profile_user_dim"
                 android:layout_marginTop="46dp"
                 android:padding="5dp"
                 android:scaleType="centerInside"
@@ -73,12 +57,14 @@
                         android:textSize="@dimen/default_text_size" />
 
                     <EditText
+                        android:id="@+id/first_name_user_edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:text="@{viewmodel.user.firstName}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/big_text_size"
+                        android:inputType="textCapSentences"
                         tools:text="User First Name" />
 
                     <View
@@ -103,11 +89,13 @@
                         android:textSize="@dimen/default_text_size" />
 
                     <EditText
+                        android:id="@+id/last_name_user_edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:text="@{viewmodel.user.lastName}"
                         android:textColor="@color/black"
+                        android:inputType="textCapSentences"
                         android:textSize="@dimen/big_text_size"
                         tools:text="User Last Name" />
 
@@ -132,13 +120,15 @@
                         android:textColor="@color/headings"
                         android:textSize="@dimen/default_text_size" />
 
-                    <TextView
+                    <EditText
+                        android:id="@+id/birth_date_user_edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:text="@{viewmodel.user.birthDateToShow()}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/big_text_size"
+                        android:inputType="date"
                         tools:text="000000000" />
 
                     <View
@@ -162,12 +152,14 @@
                         android:textColor="@color/headings"
                         android:textSize="@dimen/default_text_size" />
 
-                    <TextView
+                    <EditText
+                        android:id="@+id/city_user_edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:text="@{viewmodel.user.address.city}"
                         android:textColor="@color/black"
+                        android:inputType="textCapSentences"
                         android:textSize="@dimen/big_text_size"
                         tools:text="Paris" />
 
@@ -191,11 +183,13 @@
                         android:textColor="@color/headings"
                         android:textSize="@dimen/default_text_size" />
 
-                    <TextView
+                    <EditText
+                        android:id="@+id/postal_code_user_edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:text="@{viewmodel.user.address.postalToShow()}"
+                        android:inputType="number"
                         android:textColor="@color/black"
                         android:textSize="@dimen/big_text_size"
                         tools:text="75000" />
@@ -221,6 +215,7 @@
                         android:textSize="@dimen/default_text_size" />
 
                     <TextView
+                        android:id="@+id/street_user_edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
@@ -249,12 +244,14 @@
                         android:textColor="@color/headings"
                         android:textSize="@dimen/default_text_size" />
 
-                    <TextView
+                    <EditText
+                        android:id="@+id/street_code_user_edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:text="@{viewmodel.user.address.streetCode}"
                         android:textColor="@color/black"
+                        android:inputType="textCapSentences"
                         android:textSize="@dimen/big_text_size"
                         tools:text="2B" />
 
@@ -278,12 +275,14 @@
                         android:textColor="@color/headings"
                         android:textSize="@dimen/default_text_size" />
 
-                    <TextView
+                    <EditText
+                        android:id="@+id/country_user_edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:text="@{viewmodel.user.address.country}"
                         android:textColor="@color/black"
+                        android:inputType="textCapSentences"
                         android:textSize="@dimen/big_text_size"
                         tools:text="France" />
 

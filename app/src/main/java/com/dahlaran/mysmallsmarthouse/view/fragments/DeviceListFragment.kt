@@ -14,7 +14,7 @@ import com.dahlaran.mysmallsmarthouse.utils.CustomLogger
 import com.dahlaran.mysmallsmarthouse.view.DeviceListAdapter
 import com.dahlaran.mysmallsmarthouse.viewmodels.DeviceListViewModel
 
-class DeviceListFragment : Fragment(){
+class DeviceListFragment : Fragment() {
     private val deviceListViewModel: DeviceListViewModel by activityViewModels()
     private lateinit var viewDataBinding: FragmentDeviceListBinding
 
@@ -23,7 +23,8 @@ class DeviceListFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View {
 
-        viewDataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_device_list, container, false)
+        viewDataBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_device_list, container, false)
         viewDataBinding.apply {
             this.viewmodel = deviceListViewModel
             this.lifecycleOwner = viewLifecycleOwner
@@ -40,7 +41,7 @@ class DeviceListFragment : Fragment(){
 
     private fun setUpListAdapter() {
         val listAdapter = DeviceListAdapter { itemClicked ->
-            CustomLogger.logD(javaClass.name, "device = "+ itemClicked.name)
+            CustomLogger.logD(javaClass.name, "device = " + itemClicked.name)
         }
 
         viewDataBinding.deviceListRecycler.apply {

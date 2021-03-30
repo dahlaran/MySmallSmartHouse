@@ -4,18 +4,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
+import com.dahlaran.mysmallsmarthouse.data.DataState
 import com.dahlaran.mysmallsmarthouse.data.HouseRepository
 import com.dahlaran.mysmallsmarthouse.models.Device
 import com.dahlaran.mysmallsmarthouse.models.ProductType
-import io.reactivex.android.schedulers.AndroidSchedulers
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DeviceListViewModel : ViewModel() {
+@HiltViewModel
+class DeviceListViewModel @Inject constructor(private val repository: HouseRepository) :
+    ViewModel() {
 
     // Save Observables to remove when complete or viewModel is destroyed
     private val disposable = CompositeDisposable()
@@ -28,30 +33,7 @@ class DeviceListViewModel : ViewModel() {
     private var savedDeviceList: List<Device>? = null
 
     init {
-        if (dataLoading.value != true) {
-            dataLoading.value = true
-            val coroutineScope = CoroutineScope(Dispatchers.Default + Job())
-            coroutineScope.launch {
-                disposable.add(HouseRepository.getHouseInformation()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                        { // onNext
-                            devicesList.postValue(it.deviceList)
-                            devicesListShow.postValue(it.deviceList)
-                            // Copy value to have a make a sorting inside the liveData
-                            savedDeviceList = ArrayList(it.deviceList)
-                        },
-                        { // onError
-                            it.printStackTrace()
-                            dataLoading.postValue(false)
-                        },
-                        { // onComplete
-                            dataLoading.postValue(false)
-                        }
-                    ))
-            }
-        }
+        updateHouseInformation()
     }
 
     fun updateHouseInformation() {
@@ -59,24 +41,22 @@ class DeviceListViewModel : ViewModel() {
             dataLoading.value = true
             val coroutineScope = CoroutineScope(Dispatchers.Default + Job())
             coroutineScope.launch {
-                disposable.add(HouseRepository.updateHouseInformation()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                        { // onNext
-                            devicesList.postValue(it.deviceList)
-                            devicesListShow.postValue(it.deviceList)
-                            // Copy value to have a make a sorting inside the liveData
-                            savedDeviceList = ArrayList(it.deviceList)
-                        },
-                        { // onError
-                            it.printStackTrace()
-                            dataLoading.postValue(false)
-                        },
-                        { // onComplete
+                repository.getDeviceList().onEach {
+                    when (it) {
+                        is DataState.Loading -> dataLoading.postValue(true)
+                        is DataState.Error -> {
+                            it.exception.printStackTrace()
                             dataLoading.postValue(false)
                         }
-                    ))
+                        is DataState.Success -> {
+                            devicesList.postValue(it.data)
+                            devicesListShow.postValue(it.data)
+                            // Copy value to have a make a sorting inside the liveData
+                            savedDeviceList = ArrayList(it.data)
+                            dataLoading.postValue(false)
+                        }
+                    }
+                }.launchIn(coroutineScope)
             }
         }
     }
@@ -89,7 +69,7 @@ class DeviceListViewModel : ViewModel() {
     }
 
 
-    fun filterByTypes(types : List<ProductType>){
+    fun filterByTypes(types: List<ProductType>) {
         val listFiltered = devicesList.value?.filter { device ->
             types.contains(device.productType)
         }

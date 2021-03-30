@@ -2,53 +2,66 @@ package com.dahlaran.mysmallsmarthouse.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.dahlaran.mysmallsmarthouse.data.DataState
 import com.dahlaran.mysmallsmarthouse.data.HouseRepository
-import com.dahlaran.mysmallsmarthouse.models.Device
 import com.dahlaran.mysmallsmarthouse.models.User
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UserViewModel : ViewModel() {
+@HiltViewModel
+class UserViewModel @Inject constructor(private val repository: HouseRepository) : ViewModel() {
 
     val user: MutableLiveData<User> = MutableLiveData()
     val dataLoading: MutableLiveData<Boolean> = MutableLiveData()
 
-    // Save Observables to remove when complete or viewModel is destroyed
-    private val disposable = CompositeDisposable()
-
     init {
+        getUser()
+    }
+
+    fun getUser() {
         if (dataLoading.value != true) {
             dataLoading.value = true
             val coroutineScope = CoroutineScope(Dispatchers.Default + Job())
             coroutineScope.launch {
-                disposable.add(
-                    HouseRepository.getHouseInformation()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                        { // onNext
-                            user.postValue(it.user)
-                            // Copy value to have a make a sorting inside the liveData
-                        },
-                        { // onError
-                            it.printStackTrace()
-                            dataLoading.postValue(false)
-                        },
-                        { // onComplete
+                repository.getUser().onEach {
+                    when (it) {
+                        is DataState.Loading -> dataLoading.postValue(true)
+                        is DataState.Error -> {  // onError
+                            it.exception.printStackTrace()
                             dataLoading.postValue(false)
                         }
-                    ))
+                        is DataState.Success<User> -> {
+                            user.postValue(it.data)
+                            dataLoading.postValue(false)
+                        }
+                    }
+                }.launchIn(coroutineScope)
             }
         }
     }
 
-    override fun onCleared() {
-        disposable.clear()
-        super.onCleared()
+    fun saveUser(userToSave: User) {
+        val coroutineScope = CoroutineScope(Dispatchers.Default + Job())
+        coroutineScope.launch {
+            repository.saveUser(userToSave).onEach {
+                when (it) {
+                    is DataState.Loading -> dataLoading.postValue(true)
+                    is DataState.Error -> {  // onError
+                        it.exception.printStackTrace()
+                        dataLoading.postValue(false)
+                    }
+                    is DataState.Success<User> -> {
+                        user.postValue(it.data)
+                        dataLoading.postValue(false)
+                    }
+                }
+            }.launchIn(coroutineScope)
+        }
     }
 }

@@ -15,4 +15,10 @@
     <string name="error_read_failed">Cannot read the device file</string>
     <string name="no_devices">Any device have been found</string>
     <string name="notification_unavailable">Notification page can be an improvement</string>
+    <string name="error_field_to_long">It is to long</string>
+    <string name="error_field_blank">The field cannot be blank</string>
+    <string name="error_field_number_inside">Numbers are not allowed</string>
+    <string name="error_field_only_number">Only number are allowed</string>
+    <string name="error_field_unknown">Error on this field, restart the app</string>
+    <string name="error_field_with_error">Verify that any fields contains error</string>
 </resources>
