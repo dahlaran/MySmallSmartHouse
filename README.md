@@ -3,20 +3,20 @@ A small smart home application, able to steer devices such as lights, roller shu
 
 
 Language:
-Kotlin
-XML
+- Kotlin
+- XML
 
 Architecture:
-MVVM
-Clean Architecture
+- MVVM
+- Clean Architecture
 
 Techno:
-Binding
-Retrofit
-Room database
-Flow (for the Repository)
-LiveData (for viewModels/UI)
-Hilt
+- Binding
+- Retrofit
+- Room database
+- Flow (for the Repository)
+- LiveData (for viewModels/UI)
+- Hilt
 
 Unit Test:
-JUnit
+- JUnit
