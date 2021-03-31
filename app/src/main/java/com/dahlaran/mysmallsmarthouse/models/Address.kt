@@ -1,5 +1,7 @@
 package com.dahlaran.mysmallsmarthouse.models
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -21,5 +23,14 @@ data class Address(
                 json.getString("streetCode")
             )
         }
+
+    }
+
+    fun postalToShow(): String {
+        return postalCode.toString()
+    }
+
+    fun toJson(): String {
+        return Gson().toJson(this)
     }
 }

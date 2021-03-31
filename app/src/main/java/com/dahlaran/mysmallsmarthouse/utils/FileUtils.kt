@@ -3,12 +3,19 @@ package com.dahlaran.mysmallsmarthouse.utils
 import android.content.Context
 import com.dahlaran.mysmallsmarthouse.MySmallHouseApplication
 import com.dahlaran.mysmallsmarthouse.R
+import com.dahlaran.mysmallsmarthouse.models.House
 import java.io.IOException
 import java.io.InputStream
 
 object FileUtils {
 
     private const val DEVICES_LIST_PATH = "deviceData.txt"
+
+    fun getHouseFromFile(context: Context? = null): House {
+        val devicesString: String = getStringFromLocalDeviceFile(context)
+
+        return JsonParser.parseJsonToHouse(devicesString)
+    }
 
     fun getDevicesInputStream(): InputStream? {
         return MySmallHouseApplication.context.get()?.let { getDevicesInputStream(it) }

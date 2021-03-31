@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.dahlaran.mysmallsmarthouse.viewmodels.UserViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="@dimen/profile_user_dim"
+                android:layout_height="@dimen/profile_user_dim"
+                android:layout_marginTop="46dp"
+                android:padding="5dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_user_profile"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="@dimen/very_big_dim"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="@dimen/very_big_dim"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/profile_image">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="First Name"
+                        android:textColor="@color/headings"
+                        android:textSize="@dimen/default_text_size" />
+
+                    <EditText
+                        android:id="@+id/first_name_user_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@{viewmodel.user.firstName}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/big_text_size"
+                        android:inputType="textCapSentences"
+                        tools:text="User First Name" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/big_dim"
+                        android:background="@color/grey" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/big_dim"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Last Name"
+                        android:textColor="@color/headings"
+                        android:textSize="@dimen/default_text_size" />
+
+                    <EditText
+                        android:id="@+id/last_name_user_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@{viewmodel.user.lastName}"
+                        android:textColor="@color/black"
+                        android:inputType="textCapSentences"
+                        android:textSize="@dimen/big_text_size"
+                        tools:text="User Last Name" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/big_dim"
+                        android:background="@color/grey" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/big_dim"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Birth date"
+                        android:textColor="@color/headings"
+                        android:textSize="@dimen/default_text_size" />
+
+                    <EditText
+                        android:id="@+id/birth_date_user_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@{viewmodel.user.birthDateToShow()}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/big_text_size"
+                        android:inputType="date"
+                        tools:text="000000000" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/big_dim"
+                        android:background="@color/grey" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/big_dim"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="City"
+                        android:textColor="@color/headings"
+                        android:textSize="@dimen/default_text_size" />
+
+                    <EditText
+                        android:id="@+id/city_user_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@{viewmodel.user.address.city}"
+                        android:textColor="@color/black"
+                        android:inputType="textCapSentences"
+                        android:textSize="@dimen/big_text_size"
+                        tools:text="Paris" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/big_dim"
+                        android:background="@color/grey" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/big_dim"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Postal Code"
+                        android:textColor="@color/headings"
+                        android:textSize="@dimen/default_text_size" />
+
+                    <EditText
+                        android:id="@+id/postal_code_user_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@{viewmodel.user.address.postalToShow()}"
+                        android:inputType="number"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/big_text_size"
+                        tools:text="75000" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/big_dim"
+                        android:background="@color/grey" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/big_dim"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Street"
+                        android:textColor="@color/headings"
+                        android:textSize="@dimen/default_text_size" />
+
+                    <TextView
+                        android:id="@+id/street_user_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@{viewmodel.user.address.street}"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/big_text_size"
+                        tools:text="rue Michelet" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/big_dim"
+                        android:background="@color/grey" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/big_dim"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="StreetCode"
+                        android:textColor="@color/headings"
+                        android:textSize="@dimen/default_text_size" />
+
+                    <EditText
+                        android:id="@+id/street_code_user_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@{viewmodel.user.address.streetCode}"
+                        android:textColor="@color/black"
+                        android:inputType="textCapSentences"
+                        android:textSize="@dimen/big_text_size"
+                        tools:text="2B" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/big_dim"
+                        android:background="@color/grey" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/big_dim"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Country"
+                        android:textColor="@color/headings"
+                        android:textSize="@dimen/default_text_size" />
+
+                    <EditText
+                        android:id="@+id/country_user_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="@{viewmodel.user.address.country}"
+                        android:textColor="@color/black"
+                        android:inputType="textCapSentences"
+                        android:textSize="@dimen/big_text_size"
+                        tools:text="France" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

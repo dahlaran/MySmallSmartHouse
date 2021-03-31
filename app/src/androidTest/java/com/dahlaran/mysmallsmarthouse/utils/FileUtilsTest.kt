@@ -27,6 +27,13 @@ class FileUtilsTest {
      */
     @Test
     fun getStringFromLocalDeviceFileTest() {
-        assert(FileUtils.getStringFromLocalDeviceFile(context) != null)
+        assert(FileUtils.getStringFromLocalDeviceFile(context).isNotEmpty())
+    }
+
+    @Test
+    fun getDevicesFromFileTest() {
+        val house = FileUtils.getHouseFromFile()
+        assert(house.deviceList.isNotEmpty())
+        assert(house.user != null)
     }
 }

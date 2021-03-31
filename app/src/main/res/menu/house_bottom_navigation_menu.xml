@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/deviceListFragment"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="@string/device_list_menu" />
+    <item
+        android:id="@+id/notificationMenu"
+        android:enabled="true"
+        android:icon="@android:drawable/stat_notify_chat"
+        android:title="@string/notification_menu" />
+    <item
+        android:id="@+id/userFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_user_profile"
+        android:title="@string/user_menu"/>
+</menu>
