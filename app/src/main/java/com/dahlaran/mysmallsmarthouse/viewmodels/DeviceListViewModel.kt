@@ -1,11 +1,8 @@
 package com.dahlaran.mysmallsmarthouse.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
+import androidx.lifecycle.*
 import com.dahlaran.mysmallsmarthouse.data.DataState
-import com.dahlaran.mysmallsmarthouse.data.HouseRepository
+import com.dahlaran.mysmallsmarthouse.data.DeviceRepository
 import com.dahlaran.mysmallsmarthouse.models.Device
 import com.dahlaran.mysmallsmarthouse.models.ProductType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DeviceListViewModel @Inject constructor(private val repository: HouseRepository) :
+class DeviceListViewModel @Inject constructor(private val repository: DeviceRepository) :
     ViewModel() {
 
     // Save Observables to remove when complete or viewModel is destroyed
@@ -29,14 +26,20 @@ class DeviceListViewModel @Inject constructor(private val repository: HouseRepos
     val devicesListShow: MutableLiveData<List<Device>> = MutableLiveData()
     val dataLoading: MutableLiveData<Boolean> = MutableLiveData()
 
-    val empty: LiveData<Boolean> = devicesList.map { it.isEmpty() }
-    private var savedDeviceList: List<Device>? = null
+    val deviceTypeToShow: MutableLiveData<List<ProductType>> = MutableLiveData()
 
-    init {
-        updateHouseInformation()
+    val empty: LiveData<Boolean> = devicesList.map { it.isEmpty() }
+
+    private val deviceTypeToShowObserver: Observer<List<ProductType>> = Observer{
+        filterByTypes(it)
     }
 
-    fun updateHouseInformation() {
+    init {
+        updateDeviceListInformation()
+        deviceTypeToShow.observeForever(deviceTypeToShowObserver)
+    }
+
+    fun updateDeviceListInformation() {
         if (dataLoading.value != true) {
             dataLoading.value = true
             val coroutineScope = CoroutineScope(Dispatchers.Default + Job())
@@ -50,9 +53,7 @@ class DeviceListViewModel @Inject constructor(private val repository: HouseRepos
                         }
                         is DataState.Success -> {
                             devicesList.postValue(it.data)
-                            devicesListShow.postValue(it.data)
-                            // Copy value to have a make a sorting inside the liveData
-                            savedDeviceList = ArrayList(it.data)
+                            filterByTypes(deviceTypeToShow.value)
                             dataLoading.postValue(false)
                         }
                     }
@@ -65,14 +66,68 @@ class DeviceListViewModel @Inject constructor(private val repository: HouseRepos
     override fun onCleared() {
         // Remove observable if viewModel is destroyed
         disposable.dispose()
+        deviceTypeToShow.removeObserver(deviceTypeToShowObserver)
         super.onCleared()
     }
 
+    fun newDeviceTypeFilter(types: List<ProductType>?) {
+        deviceTypeToShow.postValue(types)
+    }
 
-    fun filterByTypes(types: List<ProductType>) {
-        val listFiltered = devicesList.value?.filter { device ->
-            types.contains(device.productType)
+    fun resetDeviceList() {
+        if (dataLoading.value != true) {
+            dataLoading.value = true
+
+            val coroutineScope = CoroutineScope(Dispatchers.Default + Job())
+            coroutineScope.launch {
+                repository.resetDatabase().onEach {
+                    when (it) {
+                        is DataState.Loading -> dataLoading.postValue(true)
+                        is DataState.Error -> {
+                            it.exception.printStackTrace()
+                            dataLoading.postValue(false)
+                        }
+                        is DataState.Success -> {
+                            devicesList.postValue(it.data)
+                            devicesListShow.postValue(it.data)
+                            dataLoading.postValue(false)
+                        }
+                    }
+                }.launchIn(coroutineScope)
+            }
         }
+    }
+
+    fun removeDevice(device: Device){
+        if (dataLoading.value != true){
+            dataLoading.value = true
+
+            val coroutineScope = CoroutineScope(Dispatchers.Default + Job())
+            coroutineScope.launch {
+                repository.removeDevice(device).onEach {
+                    when (it) {
+                        is DataState.Loading -> dataLoading.postValue(true)
+                        is DataState.Error -> {
+                            it.exception.printStackTrace()
+                            dataLoading.postValue(false)
+                        }
+                        is DataState.Success -> {
+                            devicesList.postValue(it.data)
+                            devicesListShow.postValue(it.data)
+                            dataLoading.postValue(false)
+                        }
+                    }
+                }.launchIn(coroutineScope)
+            }
+        }
+    }
+
+    private fun filterByTypes(types: List<ProductType>?) {
+        val listFiltered = types?.let {
+            devicesList.value?.filter { device ->
+                it.contains(device.productType)
+            }
+        } ?: devicesList.value
         devicesListShow.postValue(listFiltered)
     }
 }

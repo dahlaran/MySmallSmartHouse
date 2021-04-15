@@ -1,10 +1,13 @@
 package com.dahlaran.mysmallsmarthouse.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import org.json.JSONException
 import org.json.JSONObject
 
+@Entity(tableName = "heater_table")
 data class Heater(
-    override val id: Int,
+    @PrimaryKey override val id: Int,
     override val name: String,
     val mode: String,
     override val productType: ProductType,

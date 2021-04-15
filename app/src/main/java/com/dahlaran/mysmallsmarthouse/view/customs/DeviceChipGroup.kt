@@ -1,7 +1,6 @@
 package com.dahlaran.mysmallsmarthouse.view.customs
 
 import android.content.Context
-import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.appcompat.content.res.AppCompatResources
@@ -16,40 +15,56 @@ import com.google.android.material.chip.ChipGroup
 
 
 class DeviceChipGroup : ChipGroup {
+    var selectedItem: MutableList<ProductType> = mutableListOf()
 
     private var liveDataWeakReference: LiveData<List<Device>>? = null
-    private val observer: Observer<List<Device>> = Observer { list ->
-        itemList.clear()
-        list.forEach { device ->
-            if (itemList.find { device.productType == it } == null) {
-                itemList.add(device.productType)
-            }
-        }
-        selectedItem = itemList.toMutableList()
-        itemList.forEach {
-            drawShip(it)
-        }
-    }
-
     private val itemList: MutableList<ProductType> = mutableListOf()
-    private var selectedItem: MutableList<ProductType> = mutableListOf()
     private var selectedListener: ((List<ProductType>) -> Unit)? = null
 
+    // Observe list
+    private val observer: Observer<List<Device>> = Observer { list ->
+        val deviceTypeNew = mutableListOf<ProductType>()
+        list.forEach { device ->
+            // Not found inside the list of type then add it
+            if (deviceTypeNew.find { device.productType == it } == null) {
+                deviceTypeNew.add(device.productType)
+            }
+        }
+
+        // Check if there is a difference between the type of device
+        if (deviceTypeNew.count() != itemList.count() || !itemList.containsAll(deviceTypeNew)) {
+            // Remove all type that is not inside the device list
+            val tmpList = itemList.filter { type -> (deviceTypeNew.find { type == it } != null) }
+            itemList.clear()
+            itemList.addAll(tmpList)
+            // Add new device type that is not already inside the itemList
+            deviceTypeNew.forEach { type ->
+                // Not found inside the chip list then add it
+                if (itemList.find { type == it } == null) {
+                    itemList.add(type)
+                }
+            }
+
+            // If there is no item selected, update selected items by the list of items (enable all)
+            if (selectedItem.isEmpty()) {
+                selectedItem = itemList.toMutableList()
+            }
+
+            // TODO: remove only the new one
+            removeAllViews()
+            itemList.forEach {
+                drawShip(it)
+            }
+
+            // After draw, signal the listener all selected items (sure to have the same information)
+            selectedListener?.invoke(selectedItem)
+        }
+    }
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) :
             super(context, attrs, defStyleAttr)
-
-
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-        itemList.forEach {
-            drawShip(it)
-        }
-    }
-
-
 
     fun setOnSelectedListener(onChipSelected: (listItem: List<ProductType>) -> Unit) {
         selectedListener = onChipSelected
@@ -63,14 +78,10 @@ class DeviceChipGroup : ChipGroup {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val chip = inflater.inflate(R.layout.device_type_chip, this, false) as Chip
 
-        chip.apply {/*
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )*/
-
+        // Set chip properties
+        chip.apply {
             isCheckable = true
-            isChecked = true
+            isChecked = selectedItem.find { productType == it } != null
             when (productType) {
                 ProductType.LIGHT -> {
                     tag = ProductType.LIGHT.type
@@ -89,6 +100,7 @@ class DeviceChipGroup : ChipGroup {
                 }
             }
         }
+        // Set listener
         chip.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 enableItem(productType)
@@ -98,8 +110,8 @@ class DeviceChipGroup : ChipGroup {
             selectedListener?.invoke(selectedItem)
         }
 
+        // Draw chip
         addView(chip)
-
     }
 
     private fun enableItem(productType: ProductType) {

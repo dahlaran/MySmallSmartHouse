@@ -19,4 +19,5 @@ class MainActivity : AppCompatActivity() {
 
         mainBottomNavigation.setupWithNavController(navigationController.navController)
     }
+
 }

@@ -3,7 +3,7 @@ package com.dahlaran.mysmallsmarthouse.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dahlaran.mysmallsmarthouse.data.DataState
-import com.dahlaran.mysmallsmarthouse.data.HouseRepository
+import com.dahlaran.mysmallsmarthouse.data.UserRepository
 import com.dahlaran.mysmallsmarthouse.models.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class UserViewModel @Inject constructor(private val repository: HouseRepository) : ViewModel() {
+class UserViewModel @Inject constructor(private val repository: UserRepository) : ViewModel() {
 
     val user: MutableLiveData<User> = MutableLiveData()
     val dataLoading: MutableLiveData<Boolean> = MutableLiveData()

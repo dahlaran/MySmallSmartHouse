@@ -1,6 +1,8 @@
 package com.dahlaran.mysmallsmarthouse.di
 
-import com.dahlaran.mysmallsmarthouse.data.HouseRepository
+import com.dahlaran.mysmallsmarthouse.data.DeviceRepository
+import com.dahlaran.mysmallsmarthouse.data.UserRepository
+import com.dahlaran.mysmallsmarthouse.data.database.DeviceDao
 import com.dahlaran.mysmallsmarthouse.data.database.UserDao
 import dagger.Module
 import dagger.Provides
@@ -14,9 +16,17 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideMainRepository(
+    fun provideUserRepository(
         userDao: UserDao
-    ): HouseRepository {
-        return HouseRepository(userDao)
+    ): UserRepository {
+        return UserRepository(userDao)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDeviceRepository(
+        deviceDao: DeviceDao
+    ): DeviceRepository {
+        return DeviceRepository(deviceDao)
     }
 }
