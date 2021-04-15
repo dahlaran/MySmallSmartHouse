@@ -1,4 +1,6 @@
 package com.dahlaran.mysmallsmarthouse.view
 
-class DescriptionActivity {
+import androidx.appcompat.app.AppCompatActivity
+
+class DescriptionActivity : AppCompatActivity(){
 }

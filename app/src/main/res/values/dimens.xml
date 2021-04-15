@@ -9,4 +9,5 @@
     <dimen name="big_text_size">18sp</dimen>
     <dimen name="device_type_image_size">64dp</dimen>
     <dimen name="profile_user_dim">96dp</dimen>
+    <dimen name="device_delete_image_size">40dp</dimen>
 </resources>

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="120dp"
-    android:layout_marginTop="@dimen/default_dim"
     android:layout_marginStart="@dimen/big_dim"
+    android:layout_marginTop="@dimen/default_dim"
     android:layout_marginEnd="@dimen/big_dim"
     android:layout_marginBottom="@dimen/default_dim">
 
@@ -24,12 +23,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/deviceDeleteImage"
+            android:layout_width="@dimen/device_delete_image_size"
+            android:layout_height="@dimen/device_delete_image_size"
+            android:src="@android:drawable/ic_menu_delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/big_dim"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/deviceDeleteImage"
             app:layout_constraintStart_toEndOf="@id/deviceTypeImage">
 
             <TextView

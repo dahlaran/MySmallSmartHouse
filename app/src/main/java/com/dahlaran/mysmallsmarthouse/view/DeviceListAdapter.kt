@@ -3,6 +3,7 @@ package com.dahlaran.mysmallsmarthouse.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,7 @@ import com.dahlaran.mysmallsmarthouse.R
 import com.dahlaran.mysmallsmarthouse.models.*
 import com.dahlaran.mysmallsmarthouse.utils.DeviceDifference
 
-class DeviceListAdapter(private val onclickItemCallback: (itemClicked: Device) -> Unit) :
+class DeviceListAdapter(private val onclickItemCallback: (itemClicked: Device, type: ClickedType) -> Unit) :
     ListAdapter<Device, DeviceListAdapter.DeviceViewHolder>(DeviceDifference()) {
 
     companion object {
@@ -22,7 +23,7 @@ class DeviceListAdapter(private val onclickItemCallback: (itemClicked: Device) -
     class DeviceViewHolder(
         private val binding: View,
         private val layoutType: Int,
-        private val onclickCallback: ((itemClicked: Device) -> Unit)?
+        private val onclickCallback: ((itemClicked: Device, type: ClickedType) -> Unit)?
     ) : RecyclerView.ViewHolder(binding) {
 
         fun bind(device: Device) {
@@ -30,7 +31,7 @@ class DeviceListAdapter(private val onclickItemCallback: (itemClicked: Device) -
             // Set on click listener to layout to trigger an event
             itemView.setOnClickListener {
                 onclickCallback?.run {
-                    this(device)
+                    this(device, ClickedType.ITEM)
                 }
             }
 
@@ -38,6 +39,13 @@ class DeviceListAdapter(private val onclickItemCallback: (itemClicked: Device) -
                 LIGHT -> setLightLayout(device as Light)
                 HEATER -> setHeaterLayout(device as Heater)
                 ROLLER_SHUTTER -> setRollerShutterLayout(device as RollerShutter)
+            }
+
+
+            binding.findViewById<ImageView>(R.id.deviceDeleteImage).setOnClickListener {
+                onclickCallback?.run {
+                    this(device, ClickedType.DELETE)
+                }
             }
         }
 
@@ -86,4 +94,8 @@ class DeviceListAdapter(private val onclickItemCallback: (itemClicked: Device) -
     override fun onBindViewHolder(holder: DeviceViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
+}
+
+enum class ClickedType {
+    ITEM, DELETE
 }

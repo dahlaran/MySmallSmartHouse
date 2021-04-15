@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object HouseNetworkModule {
 
-    private const val API_URL = "https://api.tvmaze.com/"
+    private const val API_URL = "http://storage42.com/modulotest/"
 
     @Provides
     fun provideGsonBuilder(): GsonBuilder {
