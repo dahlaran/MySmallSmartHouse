@@ -16,5 +16,4 @@
         android:name="com.dahlaran.mysmallsmarthouse.view.fragments.UserFragment"
         tools:layout="@layout/fragment_user">
     </fragment>
-
 </navigation>

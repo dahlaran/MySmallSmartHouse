@@ -7,11 +7,10 @@ import org.json.JSONObject
 
 @Entity(tableName = "light_table")
 data class Light(
-
     @PrimaryKey override val id: Int,
     override val name: String,
-    val intensity: Int,
-    val mode: String,
+    var intensity: Int,
+    var mode: String,
     override val productType: ProductType
 ) : Device(id, name, productType) {
     companion object {
@@ -25,5 +24,17 @@ data class Light(
                 ProductType.fromJson(json)
             )
         }
+
+        fun convertStatusToMode(status: Boolean): String {
+            return if (status) "ON" else "OFF"
+        }
+    }
+
+    fun status(): Boolean{
+        return "ON" == mode
+    }
+
+    fun intensityToShow(): String {
+        return intensity.toString()
     }
 }

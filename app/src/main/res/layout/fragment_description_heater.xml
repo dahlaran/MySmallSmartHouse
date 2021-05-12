@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="heater"
+            type="com.dahlaran.mysmallsmarthouse.models.Heater" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:seekarc="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/default_dim">
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{heater.name}"
+            android:textSize="@dimen/big_text_size"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Title" />
+
+        <LinearLayout
+            android:id="@+id/layoutStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_dim"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/titleTextView">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Heater Status : " />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchCompatStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_dim"
+                android:checked="@{heater.status()}" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutIntensity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_dim"
+            app:layout_constraintTop_toBottomOf="@id/layoutStatus">
+
+            <TextView
+                android:id="@+id/heaterText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Heater Intensity : "
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.triggertrap.seekarc.SeekArc
+                android:id="@+id/seekArcTemperature"
+                android:layout_width="0dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/default_dim"
+                android:padding="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/heaterText"
+                app:layout_constraintTop_toTopOf="parent"
+                seekarc:clockwise="true"
+                seekarc:progress="@{heater.temperature}"
+                seekarc:startAngle="30"
+                seekarc:rotation="180"
+                seekarc:sweepAngle="300"
+                seekarc:touchInside="true" />
+
+            <TextView
+                android:id="@+id/heaterTemperatureText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="1dp"
+                android:gravity="center"
+                android:text="@{heater.temperatureToShow()}"
+                android:textSize="@dimen/big_text_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/seekArcTemperature"
+                app:layout_constraintEnd_toEndOf="@id/seekArcTemperature"
+                app:layout_constraintStart_toStartOf="@id/seekArcTemperature"
+                app:layout_constraintTop_toTopOf="@id/seekArcTemperature"
+                tools:text="100" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

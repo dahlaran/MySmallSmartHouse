@@ -25,5 +25,17 @@ data class Heater(
                 json.getInt("temperature")
             )
         }
+
+        fun convertStatusToMode(status: Boolean): String {
+            return if (status) "ON" else "OFF"
+        }
+    }
+
+    fun status(): Boolean {
+        return "ON" == mode
+    }
+
+    fun temperatureToShow(): String {
+        return temperature.toString()
     }
 }

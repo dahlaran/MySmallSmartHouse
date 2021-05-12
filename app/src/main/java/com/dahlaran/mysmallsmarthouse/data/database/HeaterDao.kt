@@ -19,4 +19,7 @@ interface HeaterDao {
 
     @Query("SELECT * FROM heater_table")
     suspend fun getHeaters(): List<Heater>
+
+    @Query("SELECT * FROM heater_table WHERE id=:id ")
+    suspend fun getHeater(id: Int): Heater
 }

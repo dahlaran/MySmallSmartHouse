@@ -39,13 +39,37 @@ class DeviceDao(
     fun addAllDevices(deviceList: List<Device>) {
         runBlocking {
             deviceList.forEach {
-                when (it.productType) {
-                    ProductType.HEATER -> heaterDao.insert(it as Heater)
-                    ProductType.LIGHT -> lightDao.insert(it as Light)
-                    ProductType.ROLLER_SHUTTER -> rollerShutterDao.insert(it as RollerShutter)
+                saveDeviceDependingOfType(it)
+            }
+        }
+    }
+
+    fun getDevice(deviceId: Int): Device? {
+        var device: Device?
+        runBlocking {
+            device = heaterDao.getHeater(deviceId)
+            if (device == null) {
+                device = lightDao.getLight(deviceId)
+                if (device == null) {
+                    device = rollerShutterDao.getRollerShutter(deviceId)
                 }
             }
+        }
+        return device
+    }
 
+    fun saveDevice(deviceToSave: Device): Device {
+        return runBlocking {
+            saveDeviceDependingOfType(deviceToSave)
+            getDevice(deviceToSave.id)!!
+        }
+    }
+
+    private suspend fun saveDeviceDependingOfType(device: Device) {
+        when (device.productType) {
+            ProductType.HEATER -> heaterDao.insert(device as Heater)
+            ProductType.LIGHT -> lightDao.insert(device as Light)
+            ProductType.ROLLER_SHUTTER -> rollerShutterDao.insert(device as RollerShutter)
         }
     }
 }

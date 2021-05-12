@@ -24,4 +24,8 @@ class RollerShutter(
             )
         }
     }
+
+    fun positionToShow(): String {
+        return position.toString()
+    }
 }

@@ -1,5 +1,6 @@
 package com.dahlaran.mysmallsmarthouse.view.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
@@ -13,6 +14,8 @@ import com.dahlaran.mysmallsmarthouse.models.Device
 import com.dahlaran.mysmallsmarthouse.utils.CustomLogger
 import com.dahlaran.mysmallsmarthouse.view.ClickedType
 import com.dahlaran.mysmallsmarthouse.view.DeviceListAdapter
+import com.dahlaran.mysmallsmarthouse.view.ExtraConst
+import com.dahlaran.mysmallsmarthouse.view.activities.DescriptionActivity
 import com.dahlaran.mysmallsmarthouse.viewmodels.DeviceListViewModel
 
 class DeviceListFragment : Fragment() {
@@ -34,6 +37,11 @@ class DeviceListFragment : Fragment() {
         return viewDataBinding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        deviceListViewModel.startViewModel()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.device_list_fragment_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -49,8 +57,6 @@ class DeviceListFragment : Fragment() {
         }
     }
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -62,6 +68,7 @@ class DeviceListFragment : Fragment() {
         val listAdapter = DeviceListAdapter { itemClicked, type ->
             CustomLogger.logD(javaClass.name, "device = " + itemClicked.name + " type = " + type)
             when (type) {
+                ClickedType.ITEM -> goToDescriptionActivity(itemClicked.id)
                 ClickedType.DELETE -> deviceListViewModel.removeDevice(itemClicked)
             }
         }
@@ -77,5 +84,12 @@ class DeviceListFragment : Fragment() {
         viewDataBinding.filterDeviceType.setOnSelectedListener {
             deviceListViewModel.newDeviceTypeFilter(it)
         }
+    }
+
+    fun goToDescriptionActivity(deviceId: Int) {
+        val intent = Intent(context, DescriptionActivity::class.java).apply {
+            putExtra(ExtraConst.EXTRA_DEVICE_ID, deviceId)
+        }
+        startActivity(intent)
     }
 }

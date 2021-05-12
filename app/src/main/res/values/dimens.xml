@@ -10,4 +10,7 @@
     <dimen name="device_type_image_size">64dp</dimen>
     <dimen name="profile_user_dim">96dp</dimen>
     <dimen name="device_delete_image_size">40dp</dimen>
+
+    <dimen name="seek_arc_start_angle">30</dimen>
+    <dimen name="seek_arc_sweep_angle">300</dimen>
 </resources>
