@@ -33,6 +33,5 @@ Unit Test:
 - JUnit
 
 TODO: 
-- Add description page of device (change value and save them inside the room db)
 - Add more language
 - Add dark mode
