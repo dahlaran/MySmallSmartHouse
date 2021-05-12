@@ -1,4 +1,4 @@
-package com.dahlaran.mysmallsmarthouse.view
+package com.dahlaran.mysmallsmarthouse.view.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

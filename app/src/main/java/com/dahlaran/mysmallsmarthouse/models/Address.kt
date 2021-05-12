@@ -23,7 +23,6 @@ data class Address(
                 json.getString("streetCode")
             )
         }
-
     }
 
     fun postalToShow(): String {

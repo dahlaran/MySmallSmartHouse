@@ -10,6 +10,7 @@
     <string name="notification_menu">Notification</string>
     <string name="user_menu">User</string>
     <string name="device_list_reset_menu">Reset devices</string>
+    <string name="device_desciption_menu">Device</string>
 
     <!-- Errors Message -->
     <string name="error_input_failed">Cannot find/access the device file</string>

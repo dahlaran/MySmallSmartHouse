@@ -12,18 +12,12 @@ import kotlinx.coroutines.flow.flow
  */
 class DeviceRepository constructor(private var deviceDao: DeviceDao) {
 
-    private var deviceList: List<Device> = mutableListOf()
-
     suspend fun getDeviceList(): Flow<DataState<List<Device>>> {
         return flow {
             emit(DataState.Loading)
             try {
-                // Use data already saved
-                if (deviceList.isNotEmpty()) {
-                    emit(DataState.Success(deviceList))
-                }
                 // Get data from database
-                deviceList = deviceDao.getDevices()
+                var deviceList = deviceDao.getDevices()
                 if (deviceList.isEmpty()) {
                     deviceDao.addAllDevices(FileUtils.getHouseFromFile().deviceList)
 
@@ -44,7 +38,7 @@ class DeviceRepository constructor(private var deviceDao: DeviceDao) {
                 deviceDao.removeDevice(device.id)
 
                 // Get data from database
-                deviceList = deviceDao.getDevices()
+                var deviceList = deviceDao.getDevices()
 
                 // Send new deviceList
                 emit(DataState.Success(deviceList))
@@ -63,7 +57,7 @@ class DeviceRepository constructor(private var deviceDao: DeviceDao) {
                 deviceDao.addAllDevices(FileUtils.getHouseFromFile().deviceList)
 
                 // Get data from database (shown information need to be the reflect of the db)
-                deviceList = deviceDao.getDevices()
+                var deviceList = deviceDao.getDevices()
                 emit(DataState.Success(deviceList))
             } catch (e: Exception) {
                 emit(DataState.Error(e))
@@ -71,4 +65,29 @@ class DeviceRepository constructor(private var deviceDao: DeviceDao) {
         }
     }
 
+    suspend fun getDevice(deviceId: Int): Flow<DataState<Device?>>{
+        return flow {
+            emit(DataState.Loading)
+            try {
+                val device = deviceDao.getDevice(deviceId)
+                emit(DataState.Success(device))
+            }
+            catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+    }
+
+    suspend fun saveDevice(deviceToSave: Device): Flow<DataState<Device?>> {
+        return flow {
+            emit(DataState.Loading)
+            try {
+                val device = deviceDao.saveDevice(deviceToSave)
+                emit(DataState.Success(device))
+            }
+            catch (e: Exception){
+                emit(DataState.Error(e))
+            }
+        }
+    }
 }

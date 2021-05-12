@@ -26,17 +26,12 @@ class DeviceListViewModel @Inject constructor(private val repository: DeviceRepo
     val devicesListShow: MutableLiveData<List<Device>> = MutableLiveData()
     val dataLoading: MutableLiveData<Boolean> = MutableLiveData()
 
-    val deviceTypeToShow: MutableLiveData<List<ProductType>> = MutableLiveData()
+    private val deviceTypeToShow: MutableLiveData<List<ProductType>> = MutableLiveData()
 
     val empty: LiveData<Boolean> = devicesList.map { it.isEmpty() }
 
-    private val deviceTypeToShowObserver: Observer<List<ProductType>> = Observer{
+    private val deviceTypeToShowObserver: Observer<List<ProductType>> = Observer {
         filterByTypes(it)
-    }
-
-    init {
-        updateDeviceListInformation()
-        deviceTypeToShow.observeForever(deviceTypeToShowObserver)
     }
 
     fun updateDeviceListInformation() {
@@ -62,7 +57,6 @@ class DeviceListViewModel @Inject constructor(private val repository: DeviceRepo
         }
     }
 
-
     override fun onCleared() {
         // Remove observable if viewModel is destroyed
         disposable.dispose()
@@ -72,6 +66,13 @@ class DeviceListViewModel @Inject constructor(private val repository: DeviceRepo
 
     fun newDeviceTypeFilter(types: List<ProductType>?) {
         deviceTypeToShow.postValue(types)
+    }
+
+    fun startViewModel() {
+        updateDeviceListInformation()
+        if (!deviceTypeToShow.hasObservers()) {
+            deviceTypeToShow.observeForever(deviceTypeToShowObserver)
+        }
     }
 
     fun resetDeviceList() {
@@ -98,8 +99,8 @@ class DeviceListViewModel @Inject constructor(private val repository: DeviceRepo
         }
     }
 
-    fun removeDevice(device: Device){
-        if (dataLoading.value != true){
+    fun removeDevice(device: Device) {
+        if (dataLoading.value != true) {
             dataLoading.value = true
 
             val coroutineScope = CoroutineScope(Dispatchers.Default + Job())
